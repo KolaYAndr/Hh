@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="132dp"
+    android:layout_height="120dp"
+    android:background="@drawable/background_darker_gray_rounded_corner_8"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingHorizontal="8dp"
+    android:paddingVertical="10dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/offerImage"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+        tools:background="#015905"
+        tools:src="@drawable/verified" />
+
+    <TextView
+        android:id="@+id/offerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="2.8dp"
+        android:maxLines="3"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        tools:text="Вакансии рядом с вами" />
+
+    <TextView
+        android:id="@+id/offerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="2.8dp"
+        android:textColor="#4CB24E"
+        android:textSize="14sp"
+        android:visibility="invisible"
+        tools:text="Поднять" />
+
+</LinearLayout>

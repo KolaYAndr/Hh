@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/search_screen"
+        android:enabled="true"
+        android:icon="@drawable/search_unselected"
+        android:iconTint="@color/color_selector"
+        android:iconTintMode="src_over"
+        android:title="@string/search" />
+    <item
+        android:id="@+id/favourites_screen"
+        android:enabled="true"
+        android:icon="@drawable/heart_unselected"
+        android:iconTint="@color/color_selector"
+        android:iconTintMode="multiply"
+        android:title="@string/favourites" />
+    <item
+        android:id="@+id/responds_screen"
+        android:enabled="true"
+        android:icon="@drawable/responds_unselected"
+        android:iconTint="@color/color_selector"
+        android:iconTintMode="multiply"
+        android:title="@string/responds" />
+    <item
+        android:id="@+id/messages_screen"
+        android:enabled="true"
+        android:icon="@drawable/messages_unselected"
+        android:iconTint="@color/color_selector"
+        android:iconTintMode="multiply"
+        android:title="@string/messages" />
+    <item
+        android:id="@+id/profile_screen"
+        android:enabled="true"
+        android:icon="@drawable/profile_unselected"
+        android:iconTint="@color/color_selector"
+        android:iconTintMode="multiply"
+        android:title="@string/profile" />
+
+</menu>
