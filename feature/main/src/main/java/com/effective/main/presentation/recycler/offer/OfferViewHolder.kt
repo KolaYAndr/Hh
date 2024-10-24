@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.effective.core.domain.model.Offer
 import com.effective.main.R
 
+private const val MAX_LINES_WITH_BUTTON = 2
+private const val MAX_LINES_NO_BUTTON = 3
 
 class OfferViewHolder(view: View, onItemClick: (Int) -> Unit): RecyclerView.ViewHolder(view) {
     private val offerIV = view.findViewById<ImageView>(R.id.offerImage)
@@ -24,9 +26,9 @@ class OfferViewHolder(view: View, onItemClick: (Int) -> Unit): RecyclerView.View
         if (offer.buttonDto != null) {
             offerButton.text = offer.buttonDto!!.text
             offerButton.visibility = View.VISIBLE
-            offerTitleTV.maxLines = 2
+            offerTitleTV.maxLines = MAX_LINES_WITH_BUTTON
         } else {
-            offerTitleTV.maxLines = 3
+            offerTitleTV.maxLines = MAX_LINES_NO_BUTTON
         }
         offerTitleTV.text = offer.title
 
