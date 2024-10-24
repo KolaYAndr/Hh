@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.effective.core"
+    namespace = "com.effective.database"
     compileSdk = 34
 
     defaultConfig {
@@ -18,13 +18,6 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-        debug {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -39,9 +32,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 dependencies {
@@ -52,10 +42,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation(libs.nav.fragment)
-    implementation(libs.nav.ui)
-    implementation(project(":network"))
-    implementation(project(":database"))
     implementation(libs.hilt.android)
     ksp(libs.dagger.hilt.compiler)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+    implementation(libs.gson.converter)
 }

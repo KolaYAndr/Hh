@@ -1,5 +1,7 @@
 package com.effective.main.presentation.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,7 @@ import com.effective.main.databinding.FragmentMainBinding
 import com.effective.core.presentation.vacancies_recycler.ItemClickListener
 import com.effective.core.presentation.vacancies_recycler.ItemDecorationExceptLast
 import com.effective.main.presentation.recycler.offer.OffersAdapter
+import com.effective.main.presentation.view_model.SearchUiState
 import com.effective.main.presentation.view_model.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -27,7 +30,10 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var vacanciesAdapter: VacanciesAdapter
-    private val offersAdapter = OffersAdapter()
+    private val offersAdapter = OffersAdapter { offer ->
+        val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(offer.link))
+        startActivity(intent)
+    }
 
     private val searchViewModel by viewModels<SearchViewModel>()
 
@@ -84,43 +90,78 @@ class SearchFragment : Fragment() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 searchViewModel.uiState.collectLatest { state ->
-                    if (state.offers.isEmpty()) {
-                        binding.recommendationRecycler.visibility = View.GONE
+                    if (state.errorMessage != null) {
+                        showErrorState(state.errorMessage)
                     } else {
-                        binding.recommendationRecycler.visibility = View.VISIBLE
-                        offersAdapter.submitList(state.offers)
-                    }
+                        showWorkingState(state)
 
-                    if (state.showAllVacancies) {
-                        binding.onMoreLinearLayout.visibility = View.VISIBLE
-                        binding.moreVacanciesTV.text = resources.getQuantityString(
-                            com.effective.core.R.plurals.vacancies,
-                            state.vacancies.size,
-                            state.vacancies.size
-                        )
-                        binding.moreVacanciesButton.visibility = View.GONE
-                        binding.backIB.visibility = View.VISIBLE
-
-                        if (state.vacancies.isNotEmpty()) {
-                            vacanciesAdapter.submitList(state.vacancies)
-                        }
-                    } else {
-                        binding.moreVacanciesButton.text = resources.getQuantityString(
-                            R.plurals.more_vacancies,
-                            state.vacancies.size - 2,
-                            state.vacancies.size - 2
-                        )
-                        binding.onMoreLinearLayout.visibility = View.GONE
-                        binding.backIB.visibility = View.GONE
-
-                        if (state.vacancies.isNotEmpty()) {
-                            vacanciesAdapter.submitList(state.vacancies.subList(0, 2))
-                            binding.moreVacanciesButton.visibility = View.VISIBLE
+                        if (state.showAllVacancies) {
+                            showSecondFlow(state)
+                        } else {
+                            showFirstFlow(state)
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun showWorkingState(state: SearchUiState) {
+        binding.errorMessage.visibility = View.GONE
+        binding.moreVacanciesTV.visibility = View.VISIBLE
+        binding.filterIB.visibility = View.VISIBLE
+        binding.searchInput.visibility = View.VISIBLE
+        binding.vacanciesForYou.visibility = View.VISIBLE
+
+        if (state.offers.isEmpty()) {
+            binding.recommendationRecycler.visibility = View.GONE
+        } else {
+            binding.recommendationRecycler.visibility = View.VISIBLE
+            offersAdapter.submitList(state.offers)
+        }
+    }
+
+    private fun showFirstFlow(state: SearchUiState) {
+        binding.onMoreLinearLayout.visibility = View.GONE
+        binding.backIB.visibility = View.GONE
+
+        if (state.vacancies.isNotEmpty()) {
+            vacanciesAdapter.submitList(state.vacancies.subList(0, 2))
+            binding.vacanciesRV.visibility = View.VISIBLE
+            binding.moreVacanciesButton.text = resources.getQuantityString(
+                R.plurals.more_vacancies,
+                state.vacancies.size - 2,
+                state.vacancies.size - 2
+            )
+            binding.moreVacanciesButton.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showSecondFlow(state: SearchUiState) {
+        binding.onMoreLinearLayout.visibility = View.VISIBLE
+        binding.backIB.visibility = View.VISIBLE
+        binding.moreVacanciesButton.visibility = View.GONE
+
+        if (state.vacancies.isNotEmpty()) {
+            binding.moreVacanciesTV.text = resources.getQuantityString(
+                com.effective.core.R.plurals.vacancies,
+                state.vacancies.size,
+                state.vacancies.size
+            )
+            vacanciesAdapter.submitList(state.vacancies)
+            binding.vacanciesRV.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showErrorState(errorMessage: String) {
+        binding.errorMessage.text = errorMessage
+        binding.errorMessage.visibility = View.VISIBLE
+        binding.moreVacanciesTV.visibility = View.GONE
+        binding.filterIB.visibility = View.GONE
+        binding.searchInput.visibility = View.GONE
+        binding.moreVacanciesButton.visibility = View.GONE
+        binding.vacanciesForYou.visibility = View.GONE
+        binding.vacanciesRV.visibility = View.GONE
     }
 
     private fun navigateToDetail() {

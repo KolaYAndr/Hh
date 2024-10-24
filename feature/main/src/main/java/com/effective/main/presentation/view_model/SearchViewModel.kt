@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,14 +25,20 @@ class SearchViewModel @Inject constructor(private val repository: HhRepository) 
 
     private fun fetchInfo() {
         viewModelScope.launch {
-            val vacancies = repository.getVacancies()
-            val offers = repository.getOffers()
-            _uiState.update {
-                SearchUiState(
-                    offers = offers,
-                    vacancies = vacancies,
-                    showAllVacancies = false
-                )
+            try {
+                val vacancies = repository.getVacancies()
+                val offers = repository.getOffers()
+                _uiState.update {
+                    SearchUiState(
+                        offers = offers,
+                        vacancies = vacancies,
+                        showAllVacancies = false
+                    )
+                }
+            } catch (e: IOException) {
+                _uiState.update {
+                    it.copy(errorMessage = e.message)
+                }
             }
         }
     }
@@ -56,5 +63,6 @@ class SearchViewModel @Inject constructor(private val repository: HhRepository) 
 data class SearchUiState(
     val offers: List<Offer> = emptyList(),
     val vacancies: List<Vacancy> = emptyList(),
-    val showAllVacancies: Boolean = false
+    val showAllVacancies: Boolean = false,
+    val errorMessage: String? = null
 )

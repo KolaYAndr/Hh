@@ -1,29 +1,26 @@
 package com.effective.main.presentation.recycler.offer
 
-import android.content.Intent
-import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.effective.core.domain.model.Offer
 import com.effective.main.R
 
 
-class OfferViewHolder(view: View): RecyclerView.ViewHolder(view) {
+class OfferViewHolder(view: View, onItemClick: (Int) -> Unit): RecyclerView.ViewHolder(view) {
     private val offerIV = view.findViewById<ImageView>(R.id.offerImage)
     private val offerTitleTV = view.findViewById<TextView>(R.id.offerTitle)
     private val offerButton = view.findViewById<TextView>(R.id.offerButton)
 
-    fun onBind(offer: Offer) {
+    init {
         itemView.setOnClickListener {
-            val uri = Uri.parse(offer.link)
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(itemView.context, intent, null)
+            onItemClick(adapterPosition)
         }
+    }
 
+    fun onBind(offer: Offer) {
         if (offer.buttonDto != null) {
             offerButton.text = offer.buttonDto!!.text
             offerButton.visibility = View.VISIBLE

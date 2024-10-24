@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/basic_black"
     android:paddingHorizontal="16dp"
+    android:paddingTop="16dp"
     tools:context=".presentation.fragment.FavouritesFragment">
 
     <LinearLayout
@@ -14,9 +15,20 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/errorTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/titleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:lineSpacingExtra="4dp"
             android:text="@string/favourites"
             android:textColor="@android:color/white"
@@ -24,6 +36,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/favouriteVacanciesTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,6 +47,7 @@
             tools:text="145 вакансий" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
             android:id="@+id/favouritesRV"
             android:layout_width="match_parent"
             android:layout_height="0dp"

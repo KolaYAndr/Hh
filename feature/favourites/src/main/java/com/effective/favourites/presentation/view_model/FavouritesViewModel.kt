@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,8 +21,12 @@ class FavouritesViewModel @Inject constructor(private val repository: HhReposito
 
     private fun getFavourites() {
         viewModelScope.launch {
-            val vacancies = repository.getVacancies()
-            _uiState.update { FavouritesUiState(vacancies.filter { it.isFavorite }) }
+            try {
+                val vacancies = repository.getVacancies()
+                _uiState.update { FavouritesUiState(vacancies.filter { it.isFavorite }) }
+            } catch (e: IOException) {
+                _uiState.update { it.copy(errorMessage = e.message) }
+            }
         }
     }
 
@@ -31,5 +36,6 @@ class FavouritesViewModel @Inject constructor(private val repository: HhReposito
 }
 
 data class FavouritesUiState(
-    val likedVacancies: List<Vacancy>
+    val likedVacancies: List<Vacancy>,
+    val errorMessage: String? = null
 )

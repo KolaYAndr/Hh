@@ -9,18 +9,23 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val repository: HhRepository): ViewModel() {
+class MainViewModel @Inject constructor(private val repository: HhRepository) : ViewModel() {
     private val _uiState: MutableStateFlow<MainUiState> =
-        MutableStateFlow(MainUiState(0))
+        MutableStateFlow(MainUiState())
     val uiState: StateFlow<MainUiState> get() = _uiState.asStateFlow()
 
     private fun getFavourites() {
         viewModelScope.launch {
-            val vacancies = repository.getVacancies()
-            _uiState.update { MainUiState(vacancies.count { it.isFavorite }) }
+            try {
+                val vacancies = repository.getVacancies()
+                _uiState.update { MainUiState(vacancies.count { it.isFavorite }) }
+            } catch (e: IOException) {
+                _uiState.update { it.copy(errorMessage = e.message) }
+            }
         }
     }
 
@@ -30,5 +35,6 @@ class MainViewModel @Inject constructor(private val repository: HhRepository): V
 }
 
 data class MainUiState(
-    val likedVacancies: Int
+    val likedVacancies: Int = 0,
+    val errorMessage: String? = null
 )

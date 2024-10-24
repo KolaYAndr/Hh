@@ -15,6 +15,7 @@ import com.effective.core.presentation.vacancies_recycler.ItemDecorationExceptLa
 import com.effective.core.presentation.vacancies_recycler.VacanciesAdapter
 import com.effective.favourites.R
 import com.effective.favourites.databinding.FragmentFavouritesBinding
+import com.effective.favourites.presentation.view_model.FavouritesUiState
 import com.effective.favourites.presentation.view_model.FavouritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -66,17 +67,38 @@ class FavouritesFragment : Fragment() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 favouritesViewModel.uiState.collectLatest { state ->
-                    if (state.likedVacancies.isNotEmpty()) {
-                        vacanciesAdapter.submitList(state.likedVacancies)
-                        binding.favouriteVacanciesTV.text = resources.getQuantityString(
-                            com.effective.core.R.plurals.vacancies,
-                            state.likedVacancies.size,
-                            state.likedVacancies.size
-                        )
+                    if (state.errorMessage != null) {
+                        showErrorState(state.errorMessage)
+                    } else {
+                        showWorkingState(state)
                     }
                 }
             }
         }
+    }
+
+    private fun showWorkingState(state: FavouritesUiState) {
+        binding.errorTV.visibility = View.GONE
+        binding.titleTV.visibility = View.VISIBLE
+        binding.favouritesRV.visibility = View.VISIBLE
+        binding.favouriteVacanciesTV.visibility = View.VISIBLE
+
+        if (state.likedVacancies.isNotEmpty()) {
+            vacanciesAdapter.submitList(state.likedVacancies)
+            binding.favouriteVacanciesTV.text = resources.getQuantityString(
+                com.effective.core.R.plurals.vacancies,
+                state.likedVacancies.size,
+                state.likedVacancies.size
+            )
+        }
+    }
+
+    private fun showErrorState(errorMessage: String) {
+        binding.errorTV.text = errorMessage
+        binding.errorTV.visibility = View.VISIBLE
+        binding.titleTV.visibility = View.GONE
+        binding.favouritesRV.visibility = View.GONE
+        binding.favouriteVacanciesTV.visibility = View.GONE
     }
 
     private fun navigateToDetail() {

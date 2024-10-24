@@ -13,7 +13,7 @@ class ItemClickListener(
 
     private val gestureDetector =
         GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-            override fun onSingleTapUp(e: MotionEvent): Boolean {
+            override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
                 val child = rv.findChildViewUnder(e.x, e.y)
                 if (child != null) {
                     val position = rv.getChildAdapterPosition(child)

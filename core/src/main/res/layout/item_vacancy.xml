@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background_darker_gray_rounded_corner_8"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -30,6 +33,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@android:color/transparent"
+            android:contentDescription="Like button"
             tools:src="@drawable/like_outlined" />
     </LinearLayout>
 

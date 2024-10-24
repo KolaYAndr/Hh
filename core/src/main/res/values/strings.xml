@@ -11,12 +11,14 @@
         <item quantity="one">Сейчас просматривает %d человек</item>
         <item quantity="few">Сейчас просматривает %d человека</item>
         <item quantity="many">Сейчас просматривает %d человек</item>
+        <item quantity="other">Сейчас просматривает %d человека</item>
     </plurals>
     <string name="pusblished_at">Опубликовано %s</string>
     <plurals name="vacancies">
         <item quantity="one">%d вакансия</item>
         <item quantity="few">%d вакансии</item>
         <item quantity="many">%d вакансий</item>
+        <item quantity="other">%d вакансий</item>
     </plurals>
     <string name="respond">Откликнуться</string>
 </resources>

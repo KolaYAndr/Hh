@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.effective.core.domain.model.Offer
 import com.effective.main.R
 
-class OffersAdapter : RecyclerView.Adapter<OfferViewHolder>() {
+class OffersAdapter(private val onItemClick: (Offer) -> Unit) : RecyclerView.Adapter<OfferViewHolder>() {
     private val callback = object : DiffUtil.ItemCallback<Offer>() {
         override fun areItemsTheSame(oldItem: Offer, newItem: Offer): Boolean =
             oldItem.id == newItem.id
@@ -20,7 +20,9 @@ class OffersAdapter : RecyclerView.Adapter<OfferViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OfferViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_offer, parent, false)
-        return OfferViewHolder(view)
+        return OfferViewHolder(view) {
+            onItemClick(differ.currentList[it])
+        }
     }
 
     override fun onBindViewHolder(holder: OfferViewHolder, position: Int) {
