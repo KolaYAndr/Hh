@@ -15,7 +15,6 @@ fun VacancyDto.toEntity(): VacancyEntity = VacancyEntity(
     description = description,
     experience = experience.toEntity(),
     id = id,
-    isFavorite = isFavorite,
     publishedDate = publishedDate,
     questions = questions,
     responsibilities = responsibilities,

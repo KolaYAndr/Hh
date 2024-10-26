@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.effective.core.R
 import com.effective.core.domain.model.Vacancy
 
-class VacanciesAdapter(private val onLikeClick: (Vacancy) -> Unit) :
+class VacanciesAdapter(
+    private val onLikeClick: (Vacancy) -> Unit,
+    private val onNavigate: (Vacancy) -> Unit
+) :
     RecyclerView.Adapter<VacancyViewHolder>() {
     private val callback = object : DiffUtil.ItemCallback<Vacancy>() {
         override fun areItemsTheSame(oldItem: Vacancy, newItem: Vacancy): Boolean =
@@ -26,9 +29,11 @@ class VacanciesAdapter(private val onLikeClick: (Vacancy) -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_vacancy, parent, false)
-        return VacancyViewHolder(view) {
-            onLikeClick(differ.currentList[it])
-        }
+        return VacancyViewHolder(
+            view = view,
+            onLikeClick = { onLikeClick(differ.currentList[it]) },
+            onNavigate = { onNavigate(differ.currentList[it]) }
+        )
     }
 
     override fun getItemCount(): Int = differ.currentList.size

@@ -13,7 +13,6 @@ data class VacancyEntity(
     val description: String?,
     @Embedded
     val experience: ExperienceEntity,
-    val isFavorite: Boolean,
     @ColumnInfo(name = "published_date")
     val publishedDate: String,
     val questions: List<String>,

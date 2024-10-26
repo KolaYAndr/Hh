@@ -4,7 +4,7 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-class CustomItemDecorationExceptLast(
+class ItemDecorationExceptLast(
     private val horizontal: Int = 0,
     private val vertical: Int = 0
 ) : RecyclerView.ItemDecoration() {

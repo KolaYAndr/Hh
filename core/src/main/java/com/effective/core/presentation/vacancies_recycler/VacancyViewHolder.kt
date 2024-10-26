@@ -8,7 +8,7 @@ import com.effective.core.R
 import com.effective.core.domain.model.Vacancy
 
 
-class VacancyViewHolder(view: View, onLikeClick: (Int) -> Unit) :
+class VacancyViewHolder(view: View, onLikeClick: (Int) -> Unit, onNavigate: (Int) -> Unit) :
     RecyclerView.ViewHolder(view) {
     private val resources = view.resources
     private val lookingNowTV: TextView = view.findViewById(R.id.vacancyLookingNow)
@@ -22,6 +22,7 @@ class VacancyViewHolder(view: View, onLikeClick: (Int) -> Unit) :
 
     init {
         likeButton.setOnClickListener { onLikeClick(adapterPosition) }
+        itemView.setOnClickListener { onNavigate(adapterPosition) }
     }
 
     fun onBind(vacancy: Vacancy) {

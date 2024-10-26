@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.effective.core.presentation.vacancies_recycler.VacanciesAdapter
 import com.effective.main.R
 import com.effective.main.databinding.FragmentMainBinding
-import com.effective.core.presentation.vacancies_recycler.CustomItemDecorationExceptLast
+import com.effective.core.presentation.vacancies_recycler.ItemDecorationExceptLast
 import com.effective.main.presentation.recycler.offer.OffersAdapter
 import com.effective.main.presentation.view_model.SearchUiState
 import com.effective.main.presentation.view_model.SearchViewModel
@@ -66,14 +66,15 @@ class SearchFragment : Fragment() {
     }
 
     private fun initAdapters() {
-        vacanciesAdapter = VacanciesAdapter { vacancy ->
-            searchViewModel.pressLike(vacancy)
-        }
+        vacanciesAdapter = VacanciesAdapter (
+            onLikeClick = { vacancy -> searchViewModel.pressLike(vacancy) },
+            onNavigate = { _ -> navigateToDetail() }
+        )
         with(binding.vacanciesRV) {
             adapter = vacanciesAdapter
             setHasFixedSize(false)
             val dimen = resources.getDimension(com.effective.core.R.dimen.usual_400)
-            addItemDecoration(CustomItemDecorationExceptLast(vertical = dimen.toInt()))
+            addItemDecoration(ItemDecorationExceptLast(vertical = dimen.toInt()))
 //            addOnItemTouchListener(ItemClickListener(context, this) {
 //                navigateToDetail()
 //            })
@@ -82,7 +83,7 @@ class SearchFragment : Fragment() {
             adapter = offersAdapter
             setHasFixedSize(false)
             val dimen = resources.getDimension(com.effective.core.R.dimen.usual_200)
-            addItemDecoration(CustomItemDecorationExceptLast(horizontal = dimen.toInt()))
+            addItemDecoration(ItemDecorationExceptLast(horizontal = dimen.toInt()))
         }
     }
 

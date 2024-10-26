@@ -21,4 +21,5 @@
         <item quantity="other">%d vacancies</item>
     </plurals>
     <string name="respond">Respond</string>
+    <string name="like">Like</string>
 </resources>

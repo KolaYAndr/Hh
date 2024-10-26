@@ -10,8 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.effective.core.presentation.vacancies_recycler.ItemClickListener
-import com.effective.core.presentation.vacancies_recycler.CustomItemDecorationExceptLast
+import com.effective.core.presentation.vacancies_recycler.ItemDecorationExceptLast
 import com.effective.core.presentation.vacancies_recycler.VacanciesAdapter
 import com.effective.favourites.R
 import com.effective.favourites.databinding.FragmentFavouritesBinding
@@ -50,18 +49,19 @@ class FavouritesFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        vacanciesAdapter = VacanciesAdapter { vacancy ->
-            favouritesViewModel.pressLike(vacancy)
-        }
+        vacanciesAdapter = VacanciesAdapter (
+            onLikeClick = { vacancy -> favouritesViewModel.pressLike(vacancy) },
+            onNavigate = { _ -> navigateToDetail() }
+        )
         with(binding.favouritesRV) {
             adapter = vacanciesAdapter
             setHasFixedSize(false)
             val dimen = resources.getDimension(com.effective.core.R.dimen.usual_400)
-            addItemDecoration(CustomItemDecorationExceptLast(vertical = dimen.toInt()))
+            addItemDecoration(ItemDecorationExceptLast(vertical = dimen.toInt()))
 
-            addOnItemTouchListener(ItemClickListener(context, this) {
-                navigateToDetail()
-            })
+//            addOnItemTouchListener(ItemClickListener(context, this) {
+//                navigateToDetail()
+//            })
         }
     }
 
