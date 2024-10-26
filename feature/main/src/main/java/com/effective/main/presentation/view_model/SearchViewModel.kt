@@ -43,6 +43,22 @@ class SearchViewModel @Inject constructor(private val repository: HhRepository) 
         }
     }
 
+    fun pressLike(vacancy: Vacancy) {
+        if (vacancy.isFavorite) deleteVacancy(vacancy) else likeVacancy(vacancy)
+    }
+
+    private fun likeVacancy(vacancy: Vacancy) {
+        viewModelScope.launch {
+            repository.likeVacancy(vacancy)
+        }
+    }
+
+    private fun deleteVacancy(vacancy: Vacancy) {
+        viewModelScope.launch {
+            repository.deleteVacancy(vacancy)
+        }
+    }
+
     fun showMore() {
         _uiState.update {
             it.copy(

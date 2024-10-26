@@ -15,8 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.effective.core.presentation.vacancies_recycler.VacanciesAdapter
 import com.effective.main.R
 import com.effective.main.databinding.FragmentMainBinding
-import com.effective.core.presentation.vacancies_recycler.ItemClickListener
-import com.effective.core.presentation.vacancies_recycler.ItemDecorationExceptLast
+import com.effective.core.presentation.vacancies_recycler.CustomItemDecorationExceptLast
 import com.effective.main.presentation.recycler.offer.OffersAdapter
 import com.effective.main.presentation.view_model.SearchUiState
 import com.effective.main.presentation.view_model.SearchViewModel
@@ -67,22 +66,23 @@ class SearchFragment : Fragment() {
     }
 
     private fun initAdapters() {
-        vacanciesAdapter = VacanciesAdapter()
+        vacanciesAdapter = VacanciesAdapter { vacancy ->
+            searchViewModel.pressLike(vacancy)
+        }
         with(binding.vacanciesRV) {
             adapter = vacanciesAdapter
             setHasFixedSize(false)
             val dimen = resources.getDimension(com.effective.core.R.dimen.usual_400)
-            addItemDecoration(ItemDecorationExceptLast(bottomOffset = dimen.toInt()))
-
-            addOnItemTouchListener(ItemClickListener(context, this) {
-                navigateToDetail()
-            })
+            addItemDecoration(CustomItemDecorationExceptLast(vertical = dimen.toInt()))
+//            addOnItemTouchListener(ItemClickListener(context, this) {
+//                navigateToDetail()
+//            })
         }
         with(binding.recommendationRecycler) {
             adapter = offersAdapter
             setHasFixedSize(false)
             val dimen = resources.getDimension(com.effective.core.R.dimen.usual_200)
-            addItemDecoration(ItemDecorationExceptLast(rightOffset = dimen.toInt()))
+            addItemDecoration(CustomItemDecorationExceptLast(horizontal = dimen.toInt()))
         }
     }
 
@@ -109,9 +109,11 @@ class SearchFragment : Fragment() {
     private fun showWorkingState(state: SearchUiState) {
         binding.errorMessage.visibility = View.GONE
         binding.moreVacanciesTV.visibility = View.VISIBLE
+        binding.searchFilterLV.visibility = View.VISIBLE
         binding.filterIB.visibility = View.VISIBLE
         binding.searchInput.visibility = View.VISIBLE
         binding.vacanciesForYou.visibility = View.VISIBLE
+        binding.searchFilterLV.visibility = View.VISIBLE
 
         if (state.offers.isEmpty()) {
             binding.recommendationRecycler.visibility = View.GONE
@@ -149,19 +151,21 @@ class SearchFragment : Fragment() {
                 state.vacancies.size
             )
             vacanciesAdapter.submitList(state.vacancies)
+            binding.vacanciesRV.invalidateItemDecorations()
             binding.vacanciesRV.visibility = View.VISIBLE
         }
     }
 
     private fun showErrorState(errorMessage: String) {
-        binding.errorMessage.text = errorMessage
-        binding.errorMessage.visibility = View.VISIBLE
         binding.moreVacanciesTV.visibility = View.GONE
         binding.filterIB.visibility = View.GONE
         binding.searchInput.visibility = View.GONE
         binding.moreVacanciesButton.visibility = View.GONE
         binding.vacanciesForYou.visibility = View.GONE
         binding.vacanciesRV.visibility = View.GONE
+        binding.searchFilterLV.visibility = View.GONE
+        binding.errorMessage.text = errorMessage
+        binding.errorMessage.visibility = View.VISIBLE
     }
 
     private fun navigateToDetail() {

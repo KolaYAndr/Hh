@@ -1,12 +1,13 @@
 <resources>
-    <string name="vacancies_for_you">Вакансии для вас</string>
+    <string name="vacancies_for_you">Vacancies for you</string>
     <plurals name="more_vacancies">
-        <item quantity="one">Ещё %d вакансия</item>
-        <item quantity="few">Ещё %d вакансии</item>
-        <item quantity="many">Ещё %d вакансий</item>
-        <item quantity="other">Ещё %d вакансии</item>
+        <item quantity="one">%d more vacancy</item>
+        <item quantity="few">%d more vacancies</item>
+        <item quantity="many">%d more vacancies</item>
+        <item quantity="other">%d more vacancies</item>
     </plurals>
-    <string name="published_at">Опубликовано %s</string>
-    <string name="occupation_hint">Должность, ключевые слова</string>
-    <string name="corresponding">По соответствию</string>
+    <string name="published_at">Published at %s</string>
+    <string name="occupation_hint">Occupation, key words</string>
+    <string name="corresponding">Corresponding</string>
+    <string name="filter">Filter</string>
 </resources>

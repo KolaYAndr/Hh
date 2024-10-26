@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search">Поиск</string>
+    <string name="profile">Профиль</string>
+    <string name="messages">Сообщения</string>
+    <string name="responds">Отклики</string>
+    <string name="favourites">Избранное</string>
+    <string name="placeholder_fragment">Placeholder fragment</string>
+    <string name="go_back">Вернуться</string>
+    <plurals name="people_looking_now">
+        <item quantity="one">Сейчас просматривает %d человек</item>
+        <item quantity="few">Сейчас просматривает %d человека</item>
+        <item quantity="many">Сейчас просматривает %d человек</item>
+        <item quantity="other">Сейчас просматривает %d человека</item>
+    </plurals>
+    <string name="pusblished_at">Опубликовано %s</string>
+    <plurals name="vacancies">
+        <item quantity="one">%d вакансия</item>
+        <item quantity="few">%d вакансии</item>
+        <item quantity="many">%d вакансий</item>
+        <item quantity="other">%d вакансий</item>
+    </plurals>
+    <string name="respond">Откликнуться</string>
+</resources>

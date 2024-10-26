@@ -8,7 +8,7 @@ import com.effective.core.R
 import com.effective.core.domain.model.Vacancy
 
 
-class VacancyViewHolder(view: View) :
+class VacancyViewHolder(view: View, onLikeClick: (Int) -> Unit) :
     RecyclerView.ViewHolder(view) {
     private val resources = view.resources
     private val lookingNowTV: TextView = view.findViewById(R.id.vacancyLookingNow)
@@ -20,6 +20,9 @@ class VacancyViewHolder(view: View) :
     private val experienceTV: TextView = view.findViewById(R.id.vacancyExperience)
     private val postedAtTV: TextView = view.findViewById(R.id.vacancyPostedAt)
 
+    init {
+        likeButton.setOnClickListener { onLikeClick(adapterPosition) }
+    }
 
     fun onBind(vacancy: Vacancy) {
         //проставляются ненулевые поля
@@ -28,8 +31,9 @@ class VacancyViewHolder(view: View) :
         companyNameTV.text = vacancy.company
         experienceTV.text = vacancy.experience.previewText
         postedAtTV.text = resources.getString(
-                R.string.pusblished_at,
-                vacancy.publishedDate)
+            R.string.pusblished_at,
+            vacancy.publishedDate
+        )
 
         //проставляются нулевые или вариантивные поля с проверкой
         if (vacancy.lookingNumber != null) {

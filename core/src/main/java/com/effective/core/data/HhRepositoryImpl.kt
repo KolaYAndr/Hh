@@ -11,6 +11,9 @@ import com.effective.network.data.remote.api.ApiService
 import com.effective.network.data.remote.model.Response
 import com.effective.network.data.remote.model.VacancyDto
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.util.Locale
 import javax.inject.Inject
@@ -33,7 +36,7 @@ class HhRepositoryImpl @Inject constructor(
     }
 
     private suspend fun cacheInfo(info: List<VacancyDto>) = withContext(Dispatchers.IO) {
-        info.filter { it.isFavorite }.forEach { dao.upsertVacancy(it.toEntity())}
+        info.filter { it.isFavorite }.forEach { dao.upsertVacancy(it.toEntity()) }
     }
 
     override suspend fun getVacancies(): List<Vacancy> = withContext(Dispatchers.IO) {
@@ -44,5 +47,25 @@ class HhRepositoryImpl @Inject constructor(
     override suspend fun getOffers(): List<Offer> = withContext(Dispatchers.IO) {
         val result = response?.offers ?: getInfo().offers
         result.map { it.toDomain() }
+    }
+
+    override fun getLikedVacancies(): Flow<List<Vacancy>> {
+        return dao.getLikedVacancies().map { vacancyEntities ->
+            vacancyEntities.map { entity ->
+                entity.toDomain()
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun likeVacancy(vacancy: Vacancy) = withContext(Dispatchers.IO) {
+        dao.insertVacancy(vacancy.toEntity())
+    }
+
+    override suspend fun deleteVacancy(vacancy: Vacancy) = withContext(Dispatchers.IO) {
+        dao.deleteVacancy(vacancy.toEntity())
+    }
+
+    override suspend fun upsertVacancy(vacancy: Vacancy) = withContext(Dispatchers.IO) {
+        dao.upsertVacancy(vacancy.toEntity())
     }
 }

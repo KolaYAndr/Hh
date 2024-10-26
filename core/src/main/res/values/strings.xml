@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="search">Поиск</string>
-    <string name="profile">Профиль</string>
-    <string name="messages">Сообщения</string>
-    <string name="responds">Отклики</string>
-    <string name="favourites">Избранное</string>
+    <string name="search">Search</string>
+    <string name="profile">Profile</string>
+    <string name="messages">Messages</string>
+    <string name="responds">Responds</string>
+    <string name="favourites">Favourites</string>
     <string name="placeholder_fragment">Placeholder fragment</string>
-    <string name="go_back">Вернуться</string>
+    <string name="go_back">Go back</string>
     <plurals name="people_looking_now">
-        <item quantity="one">Сейчас просматривает %d человек</item>
-        <item quantity="few">Сейчас просматривает %d человека</item>
-        <item quantity="many">Сейчас просматривает %d человек</item>
-        <item quantity="other">Сейчас просматривает %d человека</item>
+        <item quantity="one">%d human looking now</item>
+        <item quantity="few">%d humans looking now</item>
+        <item quantity="many">%d humans looking now</item>
+        <item quantity="other">%d humans looking now</item>
     </plurals>
-    <string name="pusblished_at">Опубликовано %s</string>
+    <string name="pusblished_at">Published at %s</string>
     <plurals name="vacancies">
-        <item quantity="one">%d вакансия</item>
-        <item quantity="few">%d вакансии</item>
-        <item quantity="many">%d вакансий</item>
-        <item quantity="other">%d вакансий</item>
+        <item quantity="one">%d vacancy</item>
+        <item quantity="few">%d vacancies</item>
+        <item quantity="many">%d vacancies</item>
+        <item quantity="other">%d vacancies</item>
     </plurals>
-    <string name="respond">Откликнуться</string>
+    <string name="respond">Respond</string>
 </resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vacancies_for_you">Вакансии для вас</string>
+    <plurals name="more_vacancies">
+        <item quantity="one">Ещё %d вакансия</item>
+        <item quantity="few">Ещё %d вакансии</item>
+        <item quantity="many">Ещё %d вакансий</item>
+        <item quantity="other">Ещё %d вакансии</item>
+    </plurals>
+    <string name="published_at">Опубликовано %s</string>
+    <string name="occupation_hint">Должность, ключевые слова</string>
+    <string name="corresponding">По соответствию</string>
+    <string name="filter">Отфильтровать</string>
+</resources>

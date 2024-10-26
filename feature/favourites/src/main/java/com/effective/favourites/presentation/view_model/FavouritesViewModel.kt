@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -22,11 +23,28 @@ class FavouritesViewModel @Inject constructor(private val repository: HhReposito
     private fun getFavourites() {
         viewModelScope.launch {
             try {
-                val vacancies = repository.getVacancies()
-                _uiState.update { FavouritesUiState(vacancies.filter { it.isFavorite }) }
+                repository.getLikedVacancies().collectLatest { vacancies ->
+                    _uiState.update { it.copy(likedVacancies = vacancies) }
+                }
             } catch (e: IOException) {
                 _uiState.update { it.copy(errorMessage = e.message) }
             }
+        }
+    }
+
+    fun pressLike(vacancy: Vacancy) {
+        if (vacancy.isFavorite) deleteVacancy(vacancy) else likeVacancy(vacancy)
+    }
+
+    private fun likeVacancy(vacancy: Vacancy) {
+        viewModelScope.launch {
+            repository.likeVacancy(vacancy)
+        }
+    }
+
+    private fun deleteVacancy(vacancy: Vacancy) {
+        viewModelScope.launch {
+            repository.deleteVacancy(vacancy)
         }
     }
 

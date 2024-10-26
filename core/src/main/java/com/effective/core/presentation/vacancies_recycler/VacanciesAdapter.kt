@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.effective.core.R
 import com.effective.core.domain.model.Vacancy
 
-class VacanciesAdapter :
+class VacanciesAdapter(private val onLikeClick: (Vacancy) -> Unit) :
     RecyclerView.Adapter<VacancyViewHolder>() {
     private val callback = object : DiffUtil.ItemCallback<Vacancy>() {
         override fun areItemsTheSame(oldItem: Vacancy, newItem: Vacancy): Boolean =
             oldItem.id == newItem.id
 
         override fun areContentsTheSame(oldItem: Vacancy, newItem: Vacancy): Boolean =
-            oldItem.title == newItem.title && oldItem.company == newItem.company
+            oldItem.title == newItem.title && oldItem.isFavorite == newItem.isFavorite
     }
 
     private val differ = AsyncListDiffer(this, callback)
@@ -26,7 +26,9 @@ class VacanciesAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_vacancy, parent, false)
-        return VacancyViewHolder(view)
+        return VacancyViewHolder(view) {
+            onLikeClick(differ.currentList[it])
+        }
     }
 
     override fun getItemCount(): Int = differ.currentList.size

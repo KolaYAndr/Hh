@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
         android:paddingTop="16dp"
         android:paddingBottom="8dp">
 
@@ -21,14 +20,19 @@
             android:id="@+id/errorMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="16dp"
             android:gravity="center"
             android:textColor="@android:color/white"
             android:visibility="gone" />
 
         <LinearLayout
+            android:id="@+id/searchFilterLV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginHorizontal="16dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -44,7 +48,7 @@
                     android:layout_height="24dp"
                     android:layout_marginEnd="8dp"
                     android:background="@android:color/transparent"
-                    android:contentDescription="Back"
+                    android:contentDescription="@string/go_back"
                     android:src="@drawable/back"
                     android:visibility="gone" />
 
@@ -69,7 +73,7 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
                 android:background="@drawable/image_button_rounded_corner_10"
-                android:contentDescription="Filter"
+                android:contentDescription="@string/filter"
                 android:src="@drawable/filter"
                 android:visibility="gone" />
 
@@ -79,6 +83,7 @@
             android:id="@+id/onMoreLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -113,7 +118,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:clipToPadding="false"
             android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
             android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="3"
@@ -123,6 +130,7 @@
             android:id="@+id/vacanciesForYou"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="32dp"
             android:lineSpacingExtra="4dp"
             android:text="@string/vacancies_for_you"
@@ -135,6 +143,7 @@
             android:id="@+id/vacanciesRV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -145,6 +154,7 @@
             android:id="@+id/moreVacanciesButton"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/button_enabled"
             android:gravity="center"
